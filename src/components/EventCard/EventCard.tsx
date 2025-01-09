@@ -27,7 +27,9 @@ const EventCard = ({
         <div className="flex gap-2">
           <button
             className="text-blue-500 hover:text-blue-700 font-semibold mt-2"
-            onClick={() => onEdit(event)} // Call the edit handler
+            onClick={() => onEdit(event)
+                
+            } // Call the edit handler
           >
             <MdEdit />
           </button>

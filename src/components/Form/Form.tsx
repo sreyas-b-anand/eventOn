@@ -7,7 +7,7 @@ type Event = {
   endTime: string;
   description: string;
   category: string;
-  id: string;
+  id: string; // Ensure id is always string
 };
 
 type FormProps = {
@@ -16,9 +16,17 @@ type FormProps = {
   editingEvent: Event | null;
   setEvents: React.Dispatch<React.SetStateAction<Event[]>>;
   events: Event[];
+  setEditingEvent: React.Dispatch<React.SetStateAction<Event | null>>; // Added setter for editingEvent
 };
 
-const Form = ({ selectedDate, setFormBool, editingEvent, setEvents, events }: FormProps) => {
+const Form = ({
+  selectedDate,
+  setFormBool,
+  editingEvent,
+  setEvents,
+  events,
+  setEditingEvent,
+}: FormProps) => {
   const [title, setTitle] = useState<string>(editingEvent?.title || "");
   const [date, setDate] = useState<string>(editingEvent?.date || selectedDate.toISOString().split("T")[0]);
   const [startTime, setStartTime] = useState<string>(editingEvent?.startTime || "");
@@ -26,7 +34,6 @@ const Form = ({ selectedDate, setFormBool, editingEvent, setEvents, events }: Fo
   const [description, setDescription] = useState<string>(editingEvent?.description || "");
   const [category, setCategory] = useState<string>(editingEvent?.category || "work");
 
-  // Submit the form (add or edit an event)
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -37,7 +44,7 @@ const Form = ({ selectedDate, setFormBool, editingEvent, setEvents, events }: Fo
       endTime,
       description,
       category,
-      id: Math.random().toLocaleString(),
+      id: editingEvent?.id || new Date().toISOString(), // Generate a unique ID for new events
     };
 
     if (editingEvent) {
@@ -48,14 +55,22 @@ const Form = ({ selectedDate, setFormBool, editingEvent, setEvents, events }: Fo
       setEvents(updatedEvents);
     } else {
       // Add new event
-      newEvent.id = new Date().toISOString(); // Generating unique ID for new event
       setEvents((prevEvents) => [...prevEvents, newEvent]);
     }
 
     // Save events to localStorage
     localStorage.setItem("events", JSON.stringify(events));
 
+    // Clear editing state when the form is submitted
+    setEditingEvent(null);
+
     // Close form modal
+    setFormBool(false);
+  };
+
+  const handleCancel = () => {
+    // Reset editing state when cancelling
+    setEditingEvent(null);
     setFormBool(false);
   };
 
@@ -82,7 +97,7 @@ const Form = ({ selectedDate, setFormBool, editingEvent, setEvents, events }: Fo
         id="title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        className="p-2 rounded-md border border-gray-300"
+        className="p-2 rounded-md border border-gray-300 bg-slate-600"
         required
       />
 
@@ -94,7 +109,7 @@ const Form = ({ selectedDate, setFormBool, editingEvent, setEvents, events }: Fo
         id="date"
         value={date}
         onChange={(e) => setDate(e.target.value)}
-        className="p-2 rounded-md border border-gray-300"
+        className="p-2 rounded-md border border-gray-300 bg-slate-600"
         required
       />
 
@@ -106,7 +121,7 @@ const Form = ({ selectedDate, setFormBool, editingEvent, setEvents, events }: Fo
         id="startTime"
         value={startTime}
         onChange={(e) => setStartTime(e.target.value)}
-        className="p-2 rounded-md border border-gray-300"
+        className="p-2 rounded-md border border-gray-300 bg-slate-600"
         required
       />
 
@@ -118,7 +133,7 @@ const Form = ({ selectedDate, setFormBool, editingEvent, setEvents, events }: Fo
         id="endTime"
         value={endTime}
         onChange={(e) => setEndTime(e.target.value)}
-        className="p-2 rounded-md border border-gray-300"
+        className="p-2 rounded-md border border-gray-300 bg-slate-600"
         required
       />
 
@@ -129,9 +144,7 @@ const Form = ({ selectedDate, setFormBool, editingEvent, setEvents, events }: Fo
         id="description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
-        className="p-2 rounded-md border border-gray-300"
-        
-        required
+        className="p-2 rounded-md border border-gray-300 bg-slate-600"
       />
 
       <label className="text-sm" htmlFor="category">
@@ -141,17 +154,16 @@ const Form = ({ selectedDate, setFormBool, editingEvent, setEvents, events }: Fo
         id="category"
         value={category}
         onChange={(e) => setCategory(e.target.value)}
-        className="p-2 rounded-md border border-gray-300"
+        className="p-2 rounded-md border border-gray-300 bg-slate-600"
       >
         <option value="work">Work</option>
         <option value="personal">Personal</option>
-        <option value="others">Others</option>
       </select>
 
       <div className="flex justify-between gap-4 mt-4">
         <button
           type="button"
-          onClick={() => setFormBool(false)}
+          onClick={handleCancel}
           className="w-1/2 bg-gray-500 text-white p-2 rounded-md"
         >
           Cancel
