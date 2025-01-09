@@ -1,4 +1,4 @@
-# Event Management Application
+# EventOn
 
 This is an event management application built using React, TypeScript, and Tailwind CSS. It allows users to manage events, including creating, editing, deleting, and searching for events based on title and date. The application includes features such as sorting events by date and a responsive UI for better user experience.
 
