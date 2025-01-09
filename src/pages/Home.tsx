@@ -97,7 +97,7 @@ const Home = () => {
       <input
         type="text"
         placeholder="Search events by title..."
-        className="p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary bg-gray-600 p-3"
+        className="p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary bg-gray-600 "
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
