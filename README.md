@@ -16,7 +16,7 @@ This is an event management application built using React, TypeScript, and Tailw
 - **React**: JavaScript library for building user interfaces.
 - **TypeScript**: Adds static typing to JavaScript for better development experience.
 - **Tailwind CSS**: A utility-first CSS framework for building custom designs quickly.
-- **Date Handling**: Sorting of events based on the `date` property using JavaScript's `Date` object.
+
 
 ## Installation
 
