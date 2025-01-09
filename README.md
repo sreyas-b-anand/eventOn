@@ -22,16 +22,17 @@ This is an event management application built using React, TypeScript, and Tailw
 
 To set up and run the project locally, follow these steps:
 
-1. Clone the repository:
+- 1. Clone the repository:
   ```bash
-  git clone https://github.com/sreyas-b-anand/eventOn.git
-2. Navigate into the project directory:
+   git clone https://github.com/sreyas-b-anand/eventOn.git
+
+- 2. Navigate into the project directory:
   ```bash
   cd eventOn
-3. Install the dependencies:
+- 3. Install the dependencies:
   ```bash
   npm install
-4. Start the development server:
+- 4. Start the development server:
   ```bash
   npm run dev
 
